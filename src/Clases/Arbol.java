@@ -44,8 +44,20 @@ public class Arbol {    // ÁRBOL BINARIO
     }
     
     public void agregar(Nodo root, Animal animal){
-        root.setHijoIzq(new Nodo(animal.getCaracteristica()));
-        root.getHijoIzq().setHijoDer(new Nodo(animal));
+        Nodo caracteristica = new Nodo(animal.getCaracteristica());
+        Nodo nuevoAnimal = new Nodo(animal);
+        
+        root.setHijoIzq(caracteristica);
+        root.setHijoDer(nuevoAnimal);
+        
+        intercambio(root, caracteristica);
+    }
+    
+    public void intercambio(Nodo a, Nodo b){
+        Nodo aux = new Nodo(new Animal());
+        aux.setDato(a.getDato());
+        a.setDato(b.getDato());
+        b.setDato(aux.getDato());
     }
     
     public boolean hoja(Nodo root){

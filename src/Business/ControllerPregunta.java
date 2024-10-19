@@ -47,7 +47,6 @@ public class ControllerPregunta {
     
     private void generarPregunta(){
         String pregunta = "¿El Animal ";
-
         if (root.getDato() instanceof Animal)
             pregunta += "es un/a " + root.getDato() + "?";
         else 
@@ -62,11 +61,11 @@ public class ControllerPregunta {
         }
         else if (arbolito.hoja(root) && respuesta.equals("No") || root.getHijoIzq() == null && respuesta.equals("No")){
             vPregunta.notify("Animal NO Encontrado.\n Registre al nuevo animal");
-            
             vRegistro.setRoot(root);
             vRegistro.setArbolito(arbolito);
             vRegistro.getVista().setVisible(true);
             vRegistro.getController();
+            reiniciar();
         }
         else{
             root = arbolito.recorrer(root, respuesta);
