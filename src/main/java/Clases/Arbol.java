@@ -5,12 +5,9 @@
 package Clases;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import java.util.HashMap;
 import java.util.Map;
 import java.io.File;
@@ -82,7 +79,7 @@ public class Arbol {    // ÁRBOL BINARIO
     }
     
     public Nodo recorrer(Nodo root, String respuesta){
-        if(respuesta == "No")
+        if("No".equals(respuesta))
             return root.getHijoIzq();
         else
             return root.getHijoDer();
