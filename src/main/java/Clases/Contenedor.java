@@ -12,17 +12,14 @@ package Clases;
 public class Contenedor<T> {
     private NodoGenerico<T> dummy;
     private NodoGenerico<T> back;
-    int size;
 
-    public Contenedor(NodoGenerico<T> dummy, NodoGenerico<T> back) {
+    public Contenedor() {
         this.dummy = new NodoGenerico<>();
         this.back = new NodoGenerico<>();
         dummy.setDerecha(back);
         back.setIzquierda(dummy);    
     }
-
-    public Contenedor() {
-    }
+    
     
     public void hojasDelArbol(Nodo root, int nivel){
         
@@ -34,7 +31,7 @@ public class Contenedor<T> {
             Animal animal = root.getAnimal();
             animal.setCodigo(nivel);
             
-            agregarPrimero((T) animal);
+            agregarPrimero((T) root);
         }
         
         hojasDelArbol(root.getHijoIzq(), nivel+1);
@@ -55,8 +52,8 @@ public class Contenedor<T> {
     
     public void display() {
         NodoGenerico<T> temp = dummy.getDerecha();
-        while (temp != back) {
-            System.out.println(temp.getContenido());
+        while (temp != back && temp != back) {
+            System.out.println(temp.getContenido().toString());
             temp = temp.getDerecha();
         }
     }

@@ -22,7 +22,7 @@ public class Arbol {    // ÁRBOL BINARIO
     
     public Arbol() {
         this.cargarJson("arbol.json");
-     /*   
+       
         raiz = new Nodo ("Reino animal");
         
         raiz.setHijoDer(new Nodo(new Animal("Ave")));
@@ -48,7 +48,7 @@ public class Arbol {    // ÁRBOL BINARIO
         raiz.getHijoDer().getHijoIzq().getHijoIzq().getHijoIzq().getHijoIzq().getHijoIzq().setHijoDer(new Nodo(new Animal("Rana"))); //anfibio dere
         
         raiz.getHijoDer().getHijoIzq().getHijoIzq().getHijoIzq().getHijoIzq().getHijoIzq().setHijoIzq(new Nodo(new Animal("Culebra"))); // anfibio izq
-    */
+    
     }
 
     public Nodo getRaiz() {

@@ -20,11 +20,11 @@ public class Main {
         
         Contenedor<Animal> contenedor = new Contenedor<Animal>();
         
-        //contenedor.hojasDelArbol(arbol.getRaiz(), 0);
-        //contenedor.display();
-        arbol.toString();
-        Animal animal = new Animal();
-        animal.toString();
+        
+        //arbol.cargarJson("arbol.json");
+        contenedor.hojasDelArbol(arbol.getRaiz(), 0);
+        contenedor.display();
+
         
                 
         

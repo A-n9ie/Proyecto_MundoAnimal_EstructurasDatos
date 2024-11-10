@@ -24,7 +24,7 @@ public class ControllerPregunta {
         this.root = arbolito.getRaiz().getHijoDer();
         this.vPregunta = new VistaPregunta();
         this.vRegistro = new ControllerRegistro();
-        generarPregunta();
+        //generarPregunta();
         vPregunta.setVisible(true);
         
     }
