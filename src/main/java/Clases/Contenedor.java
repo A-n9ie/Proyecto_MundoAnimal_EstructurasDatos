@@ -1,11 +1,5 @@
 package Clases;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -16,16 +10,33 @@ import java.util.Map;
 public class Contenedor<T> {
     private NodoGenerico<T> dummy;
     private NodoGenerico<T> back;
-    private Map<String, List<String>> map;
 
     public Contenedor() {
         this.dummy = new NodoGenerico<>();
         this.back = new NodoGenerico<>();
         dummy.setDerecha(back);
-        back.setIzquierda(dummy);    
-        this.map = new HashMap<>();
+        back.setIzquierda(dummy);   
     }
     
+    public Contenedor(Contenedor<T> otroContenedor) {   //Contructor copia
+        this.dummy = new NodoGenerico<>();
+        this.back = new NodoGenerico<>();
+        dummy.setDerecha(back);
+        back.setIzquierda(dummy);
+
+        if (otroContenedor.dummy.getDerecha() != otroContenedor.back) {
+            NodoGenerico<T> temp = otroContenedor.dummy.getDerecha();
+            while (temp != otroContenedor.back) {
+                agregarPrimero(temp.getContenido());  
+                temp = temp.getDerecha();
+            }
+        }
+    }
+
+    
+    public boolean isEmpty() {
+        return dummy.getDerecha() == back;  // La lista está vacía si el nodo después de dummy es back
+    }
     
     public void hojasDelArbol(Nodo root, int nivel){
         if(root == null){
@@ -43,29 +54,6 @@ public class Contenedor<T> {
         hojasDelArbol(root.getHijoDer(), nivel+1);
     }
     
-    public void agregarMap(Nodo root, List<String> caracteristicas, boolean quitar) {
-    if (root != null) {
-        LinkedList<String> copia = new LinkedList<>(caracteristicas);  
-        
-        if(quitar)
-            copia.pop();
-
-        if (root.getAnimal() != null && !root.esHoja()) {
-            copia.push(root.getAnimal().getNombre());
-        } else {
-            if(!root.getCaracteristica().isEmpty())
-                copia.push(root.getCaracteristica());
-        }
-
-        if (root.esHoja()) {
-            map.put(root.getAnimal().getNombre(), copia);  
-        } else {
-            agregarMap(root.getHijoDer(), copia, false);  
-            agregarMap(root.getHijoIzq(), copia, true);
-        }
-    }
-}
-
     public void agregarPrimero(T contenido){
         NodoGenerico<T> nuevoNodo = new NodoGenerico<>(contenido);
         nuevoNodo.setDerecha(dummy.getDerecha());
@@ -76,6 +64,21 @@ public class Contenedor<T> {
         dummy.setDerecha(nuevoNodo);
     }
     
+    public T popFirst() {
+        if (dummy.getDerecha() == back) {
+            System.out.println("La lista está vacía.");
+            return null;
+        }
+
+        NodoGenerico<T> nodoAEliminar = dummy.getDerecha();
+        T contenido = nodoAEliminar.getContenido();
+
+        dummy.setDerecha(nodoAEliminar.getDerecha());
+        nodoAEliminar.getDerecha().setIzquierda(dummy);
+
+        return contenido;
+    }
+
     public void addLast(T contenido){
         NodoGenerico nuevoNodo = new NodoGenerico<>(contenido);
         //nuevoNodo.setDerecha(back);
@@ -87,6 +90,50 @@ public class Contenedor<T> {
         
         back.setIzquierda(nuevoNodo);
     }
+    
+    public T popLast() {
+        if (dummy.getDerecha() == back) {
+            System.out.println("La lista está vacía.");
+            return null;
+        }
+
+        NodoGenerico<T> nodoAEliminar = back.getIzquierda();
+        T contenido = nodoAEliminar.getContenido();
+
+        back.setIzquierda(nodoAEliminar.getIzquierda());
+        nodoAEliminar.getIzquierda().setDerecha(back);
+
+        return contenido;
+    }
+    
+    public T get(int index) {
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException("Índice fuera de los límites del contenedor.");
+        }
+
+        NodoGenerico<T> temp = dummy.getDerecha();
+        int cont = 0;
+
+        while (temp != back && cont < index) {
+            temp = temp.getDerecha();
+            cont++;
+        }
+
+        return temp.getContenido();  
+    }
+
+    public int size() {
+        int cont = 0;
+        NodoGenerico<T> temp = dummy.getDerecha();
+
+        while (temp != back) {
+            cont++;
+            temp = temp.getDerecha();
+        }
+
+        return cont;
+    }
+
     
     public void display() {
         
@@ -155,60 +202,5 @@ public class Contenedor<T> {
        temporal = dummy;
        dummy = back;
        back = temporal;
-    }
-    /*
-    public void llaveMap(){
-         NodoGenerico<T> temp = dummy.getDerecha();
-         
-        while (temp != back) {
-        Animal animal = (Animal) temp.getContenido();  
-
-        //List<String> caracteristicas = Arrays.asList(caracteristica);
-
-        map.put(animal.getNombre(), animal.getCaracteristica());
-
-        temp = temp.getDerecha(); 
-        }
-    }
-    
-    public void mostrarMap() {
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            String nombreAnimal = entry.getKey();  // Nombre del animal
-            String caracteristicas = entry.getValue();  // Lista de características
-            System.out.println("Animal: " + nombreAnimal + " --> Características: " + caracteristicas);
-        }
-    }
-    
-    
-    
-}
-    */
-    
-    public void mostrarMap (){
-        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-            System.out.print(entry.getKey() + " -> ");
-            for(int i = 0; i < entry.getValue().size(); i++){
-                System.out.print(entry.getValue().get(i));
-                if(i != entry.getValue().size() - 1)
-                    System.out.print(", ");
-            }
-            System.out.println("");
-        }
-    }
-    
-    public void features(String nombre) {
-        List<String> caracteristicas = map.get(nombre);
-
-        if (caracteristicas == null || caracteristicas.isEmpty()) {
-            System.out.println("No existe");
-        } else {
-            System.out.print("Características de " + nombre + ": ");
-            for(int i = 0; i < caracteristicas.size(); i++){
-                System.out.print(caracteristicas.get(i));
-                if(i != caracteristicas.size() - 1)
-                    System.out.print(", ");
-            }
-            System.out.println("");
-        }
     }
 }

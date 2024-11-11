@@ -8,6 +8,7 @@ import Business.ControllerPregunta;
 import Clases.Animal;
 import Clases.Arbol;
 import Clases.Contenedor;
+import Clases.MapAnimales;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -21,16 +22,16 @@ public class Main {
         Arbol arbol = new Arbol();
 
         Contenedor<Animal> contenedor = new Contenedor<>();
-        
+        MapAnimales map = new MapAnimales();
         
         contenedor.hojasDelArbol(arbol.getRaiz(), 0);
         contenedor.display();
-        contenedor.mostrarMap();
-        contenedor.agregarMap(arbol.getRaiz().getHijoDer(), new ArrayList<>(), false);
-        contenedor.mostrarMap();
+        
+        map.agregarMap(arbol.getRaiz().getHijoDer(), new Contenedor<>(), false);
+        map.mostrarMap();
         /*//contenedor.InsertionSort();
         //contenedor.reverse();*/
         String nombreAnimal = JOptionPane.showInputDialog("Ingrese el nombre del animal a buscar");
-        contenedor.features(nombreAnimal);
+        map.features(nombreAnimal);
     }
 }
