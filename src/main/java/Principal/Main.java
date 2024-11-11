@@ -21,12 +21,10 @@ public class Main {
         Contenedor<Animal> contenedor = new Contenedor<Animal>();
         
         
-        //arbol.cargarJson("arbol.json");
         contenedor.hojasDelArbol(arbol.getRaiz(), 0);
         contenedor.display();
-
-        
-                
-        
+        contenedor.mostrarMap();
+        //contenedor.InsertionSort();
+        //contenedor.reverse();
     }
 }
