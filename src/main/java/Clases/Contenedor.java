@@ -35,7 +35,7 @@ public class Contenedor<T> {
 
     
     public boolean isEmpty() {
-        return dummy.getDerecha() == back;  // La lista está vacía si el nodo después de dummy es back
+        return dummy.getDerecha() == back;  
     }
     
     public void hojasDelArbol(Nodo root, int nivel){
@@ -79,15 +79,17 @@ public class Contenedor<T> {
         return contenido;
     }
 
-    public void addLast(T contenido){
-        NodoGenerico nuevoNodo = new NodoGenerico<>(contenido);
-        //nuevoNodo.setDerecha(back);
+    public void addLast(T contenido) {
+        NodoGenerico<T> nuevoNodo = new NodoGenerico<>(contenido);
+
+        nuevoNodo.setDerecha(back);
         nuevoNodo.setIzquierda(back.getIzquierda());
-        
-         //if (back.getIzquierda()!= null) {
+        if (back.getIzquierda() != dummy) {
             back.getIzquierda().setDerecha(nuevoNodo);
-       // }
-        
+        } else {
+            dummy.setDerecha(nuevoNodo);
+        }
+
         back.setIzquierda(nuevoNodo);
     }
     

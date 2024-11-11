@@ -26,10 +26,10 @@ public class MapAnimales {
                 copia.popFirst();    //quita la caracteristica anterior si no es necesaria
 
             if (root.getAnimal() != null && !root.esHoja()) {
-                copia.agregarPrimero(root.getAnimal().getNombre());
+                copia.addLast(root.getAnimal().getNombre());
             } else {
                 if(!root.getCaracteristica().isEmpty())
-                    copia.agregarPrimero(root.getCaracteristica());
+                    copia.addLast(root.getCaracteristica());
             }
 
             if (root.esHoja()) {
