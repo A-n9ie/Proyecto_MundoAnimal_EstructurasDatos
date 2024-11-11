@@ -149,10 +149,23 @@ public class Contenedor<T> {
     }
     
     public void mostrarMap() {
-    for (Map.Entry<String, String> entry : map.entrySet()) {
-        String nombreAnimal = entry.getKey();  // Nombre del animal
-        String caracteristicas = entry.getValue();  // Lista de características
-        System.out.println("Animal: " + nombreAnimal + " --> Características: " + caracteristicas);
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            String nombreAnimal = entry.getKey();  // Nombre del animal
+            String caracteristicas = entry.getValue();  // Lista de características
+            System.out.println("Animal: " + nombreAnimal + " --> Características: " + caracteristicas);
         }
     }
+    
+    public void features(String nombre) {
+    String caracteristicas = map.get(nombre);
+    
+    if (caracteristicas == null) {
+        System.out.println("No existe");
+    } else {
+        System.out.println("Características de " + nombre + ": " + caracteristicas);
+    }
+    
+}
+    
+    
 }

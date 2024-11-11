@@ -8,6 +8,7 @@ import Business.ControllerPregunta;
 import Clases.Animal;
 import Clases.Arbol;
 import Clases.Contenedor;
+import javax.swing.JOptionPane;
 
 public class Main {
 
@@ -26,5 +27,7 @@ public class Main {
         contenedor.mostrarMap();
         //contenedor.InsertionSort();
         //contenedor.reverse();
+        String nombreAnimal = JOptionPane.showInputDialog("Ingrese el nombre del animal a buscar");
+        contenedor.features(nombreAnimal);
     }
 }
