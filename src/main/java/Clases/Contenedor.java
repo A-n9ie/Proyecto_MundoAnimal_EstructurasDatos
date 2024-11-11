@@ -1,7 +1,9 @@
 package Clases;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +16,7 @@ import java.util.Map;
 public class Contenedor<T> {
     private NodoGenerico<T> dummy;
     private NodoGenerico<T> back;
-    private Map<String, String> map;
+    private Map<String, List<String>> map;
 
     public Contenedor() {
         this.dummy = new NodoGenerico<>();
@@ -26,7 +28,6 @@ public class Contenedor<T> {
     
     
     public void hojasDelArbol(Nodo root, int nivel){
-        
         if(root == null){
             return;
         }
@@ -36,13 +37,35 @@ public class Contenedor<T> {
             animal.setCodigo(nivel);
            
             agregarPrimero((T) animal);
-            llaveMap();
         }
         
         hojasDelArbol(root.getHijoIzq(), nivel+1);
         hojasDelArbol(root.getHijoDer(), nivel+1);
     }
     
+    public void agregarMap(Nodo root, List<String> caracteristicas, boolean quitar) {
+    if (root != null) {
+        LinkedList<String> copia = new LinkedList<>(caracteristicas);  
+        
+        if(quitar)
+            copia.pop();
+
+        if (root.getAnimal() != null && !root.esHoja()) {
+            copia.push(root.getAnimal().getNombre());
+        } else {
+            if(!root.getCaracteristica().isEmpty())
+                copia.push(root.getCaracteristica());
+        }
+
+        if (root.esHoja()) {
+            map.put(root.getAnimal().getNombre(), copia);  
+        } else {
+            agregarMap(root.getHijoDer(), copia, false);  
+            agregarMap(root.getHijoIzq(), copia, true);
+        }
+    }
+}
+
     public void agregarPrimero(T contenido){
         NodoGenerico<T> nuevoNodo = new NodoGenerico<>(contenido);
         nuevoNodo.setDerecha(dummy.getDerecha());
@@ -133,7 +156,7 @@ public class Contenedor<T> {
        dummy = back;
        back = temporal;
     }
-    
+    /*
     public void llaveMap(){
          NodoGenerico<T> temp = dummy.getDerecha();
          
@@ -156,16 +179,36 @@ public class Contenedor<T> {
         }
     }
     
-    public void features(String nombre) {
-    String caracteristicas = map.get(nombre);
     
-    if (caracteristicas == null) {
-        System.out.println("No existe");
-    } else {
-        System.out.println("Características de " + nombre + ": " + caracteristicas);
-    }
     
 }
+    */
     
+    public void mostrarMap (){
+        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+            System.out.print(entry.getKey() + " -> ");
+            for(int i = 0; i < entry.getValue().size(); i++){
+                System.out.print(entry.getValue().get(i));
+                if(i != entry.getValue().size() - 1)
+                    System.out.print(", ");
+            }
+            System.out.println("");
+        }
+    }
     
+    public void features(String nombre) {
+        List<String> caracteristicas = map.get(nombre);
+
+        if (caracteristicas == null || caracteristicas.isEmpty()) {
+            System.out.println("No existe");
+        } else {
+            System.out.print("Características de " + nombre + ": ");
+            for(int i = 0; i < caracteristicas.size(); i++){
+                System.out.print(caracteristicas.get(i));
+                if(i != caracteristicas.size() - 1)
+                    System.out.print(", ");
+            }
+            System.out.println("");
+        }
+    }
 }

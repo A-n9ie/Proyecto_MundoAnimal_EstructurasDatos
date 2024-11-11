@@ -60,4 +60,8 @@ public class Nodo {
         this.hijoDer = hijoDer;
     }
     
+    boolean esHoja(){
+        return hijoDer == null && hijoIzq == null;
+    }
+    
 }
