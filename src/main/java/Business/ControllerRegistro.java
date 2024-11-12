@@ -7,7 +7,7 @@ package Business;
 import Clases.Animal;
 import Clases.Arbol;
 import Clases.Nodo;
-import Presentacion.Vista;
+import java.util.Scanner;
 
 /**
  *
@@ -16,22 +16,17 @@ import Presentacion.Vista;
 public class ControllerRegistro {
     private Nodo root;
     private Arbol arbolito;
-    private Vista vista;
+    private Scanner scanner;
 
     public ControllerRegistro() {
-        this.vista = new Vista();
+        this.scanner = new Scanner(System.in);
         this.root = null;
         this.arbolito = null;
     }
 
-    public ControllerRegistro(Vista vista, Nodo root, Arbol arbolito) {
-        this.vista = vista;
+    public ControllerRegistro(Nodo root, Arbol arbolito) {
         this.root = root;
         this.arbolito = arbolito;
-    }
-
-    public Vista getVista() {
-        return vista;
     }
 
     public void setRoot(Nodo root) {
@@ -48,15 +43,17 @@ public class ControllerRegistro {
     
     
     private void registrar(){
-        String nombre = vista.pedirRespuesta("Ingrese el nombre del animal");
-        String caracteristica = vista.pedirRespuesta("Ingrese la caracteristica del animal");
+        System.out.println("Ingrese el nombre del animal");
+        String nombre = scanner.next();
+        System.out.println("Ingrese la caracteristica del animal");
+        String caracteristica = scanner.next();
         
         if(nombre == null || nombre.isEmpty() || caracteristica == null || caracteristica.isEmpty()){
-          vista.mostrarMensaje("Ingrese los datos completos");
+            System.out.println("Ingrese los datos completos");
         }else{
             Animal animal = new Animal(nombre, caracteristica);
             arbolito.agregar(root, animal);
-            vista.mostrarMensaje("Animal registrado correctamente");
+            System.out.println("Animal registrado correctamente");
         }
     }
     

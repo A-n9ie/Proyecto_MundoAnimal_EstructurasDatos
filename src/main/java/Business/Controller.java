@@ -8,7 +8,7 @@ import Clases.Animal;
 import Clases.Arbol;
 import Clases.Contenedor;
 import Clases.MapAnimales;
-import Presentacion.Vista;
+import java.util.Scanner;
 
 /**
  *
@@ -17,17 +17,17 @@ import Presentacion.Vista;
 public class Controller {
     private ControllerPregunta controllerPreg;
     private Arbol arbol;
-    private Vista vista;
     private Contenedor<Animal> contenedor;
     private MapAnimales map;
     int eleccion;
+    Scanner scanner;
 
-    public Controller(Vista vista, Arbol arbol) {
-        this.vista = vista;
+    public Controller(Arbol arbol) {
         this.arbol = arbol;
-        this.controllerPreg = new ControllerPregunta(vista, arbol);
+        this.controllerPreg = new ControllerPregunta(arbol);
         this.contenedor = new Contenedor<>();
         this.map = new MapAnimales();
+        this.scanner = new Scanner(System.in);
     }
     
     public void getController(){
@@ -35,36 +35,44 @@ public class Controller {
     }
     
     public void menuLista(){
-        //boolean continuar = true;
-        
-        while(true){
-        eleccion = vista.mostrarLista();
+        boolean continuar = true;  
+        while(continuar){
+            System.out.println("Menú de Opciones:");
+            System.out.println("0. Transformar el árbol a lista");
+            System.out.println("1. Mostrar lista");
+            System.out.println("2. Ordenar lista");
+            System.out.println("3. Invertir lista");
+            System.out.println("4. Buscar características por nombre");
+            System.out.println("5. Salir");
+            System.out.print("Seleccione una opción: ");
+        eleccion = scanner.nextInt();
          
          switch (eleccion) {
              case 0:
-                 vista.mostrarMensaje("Transformando el arbol a lista");
+                 System.out.println("Transformando el arbol a lista");
                  contenedor.hojasDelArbol(arbol.getRaiz(), 0);
                  map.agregarMap(arbol.getRaiz().getHijoDer(), new Contenedor<>(), false);
                  break;
             case 1:
-                vista.mostrarMensaje("Mostrar lista");
+                System.out.println("Lista");
                 contenedor.display();
                 break;
             case 2:
-                vista.mostrarMensaje("Mostrar lista ordenada");
+                System.out.println("Ordenar lista");
                 contenedor.InsertionSort();
                 break;
             case 3:
-                vista.mostrarMensaje("Mostrar lista invertida");
+                System.out.println("Invertir lista");
                 contenedor.reverse();
                 break;
             case 4:
-                String nombreAnimal = vista.pedirRespuesta("Ingrese el nombre del animal");
+                System.out.println("Ingrese el nombre del animal");
+                String nombreAnimal = scanner.next();
                 map.features(nombreAnimal);
                 break;
             case 5:
-               vista.mostrarMensaje("Saliendo...");
-               System.exit(0);
+                System.out.println("Saliendo...");
+                continuar = false;
                break;
             default:
                 break;
@@ -73,7 +81,12 @@ public class Controller {
     }
     
     public void mostrarOpcion(){
-        eleccion = vista.mostrarMenuPrincipal();
+        System.out.println("\nMenú Principal:");
+        System.out.println("0. Arbol");
+        System.out.println("1. Lista");
+        System.out.println("2. Salir");
+        System.out.print("Seleccione una opción: ");
+        eleccion = scanner.nextInt();
             
         switch (eleccion) {
              case 0:
@@ -83,13 +96,11 @@ public class Controller {
                 menuLista();
                 break;
             case 2:
-                vista.mostrarMensaje("Saliendo...");
-                System.exit(0);
+                System.out.println("Saliendo...");
                 break;
             default: 
                 break;
       }
-
     }
     
 }
