@@ -29,30 +29,37 @@ public class ControllerPregunta {
     }
     
     private void generarPregunta(){
-        String pregunta = " ";
-        if (root != null && root.getAnimal() != null){
-            System.out.println("El animal es un/a" + root.getAnimal() + "?");
-            pregunta = scanner.next();
-        }else if(root != null && root.getCaracteristica() != null){
-            System.out.println("El animal " + root.getCaracteristica() + "?");
-            pregunta = scanner.next();
+        String respuesta = "";
+        while (true) {
+            if (root != null && root.getAnimal() != null){
+                System.out.println("¿El animal es un/a " + root.getAnimal() + "?");
+            }else if(root != null && root.getCaracteristica() != null){
+                System.out.println("¿El animal " + root.getCaracteristica() + "?");
+            }
+            respuesta = scanner.next();
+            if (respuesta.equals("si") || respuesta.equals("no")) {
+                break;  
+            } else {
+                System.out.println("Respuesta no válida.\nPor favor, responder solo con 'si' o 'no'.");
+            }
         }
         
-        if(pregunta != null){
-            pregunta = pregunta.toLowerCase();
-            realizarPregunta(pregunta);
+        if(respuesta != null){
+            respuesta = respuesta.toLowerCase();
+            realizarPregunta(respuesta);
         }
     }
     
     private void realizarPregunta(String respuesta){
         if(arbolito != null && root != null && arbolito.hoja(root) && respuesta.equals("si")){
-            System.out.println("Animal no encontrado");
+            System.out.println("¡Animal encontrado!");
         }
         else if ((arbolito.hoja(root) && respuesta.equals("no")) || (root.getHijoIzq() == null && respuesta.equals("no"))){
             System.out.println("Animal NO Encontrado.\n Registre al nuevo animal");
             vRegistro.setRoot(root);
             vRegistro.setArbolito(arbolito);
             vRegistro.getController();
+            salir();
             reiniciar();
         }
         else{
@@ -63,7 +70,6 @@ public class ControllerPregunta {
     
     public void reiniciar(){
         this.root = arbolito.getRaiz().getHijoDer();
-        generarPregunta();
     }
     
     public void salir(){

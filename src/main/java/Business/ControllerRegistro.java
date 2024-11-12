@@ -44,9 +44,9 @@ public class ControllerRegistro {
     
     private void registrar(){
         System.out.println("Ingrese el nombre del animal");
-        String nombre = scanner.next();
+        String nombre = scanner.nextLine();
         System.out.println("Ingrese la caracteristica del animal");
-        String caracteristica = scanner.next();
+        String caracteristica = scanner.nextLine();
         
         if(nombre == null || nombre.isEmpty() || caracteristica == null || caracteristica.isEmpty()){
             System.out.println("Ingrese los datos completos");

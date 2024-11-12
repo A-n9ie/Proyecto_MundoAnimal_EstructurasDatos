@@ -10,7 +10,6 @@ package Clases;
 public class Contenedor<T> {
     private NodoGenerico<T> dummy;
     private NodoGenerico<T> back;
-    private boolean invertido = false;
 
     public Contenedor() {
         this.dummy = new NodoGenerico<>();
@@ -160,39 +159,21 @@ public class Contenedor<T> {
        dummy = back;
        back = temporal;
         System.out.println("Lista invertida");
-       invertido = !invertido; //ahora esta invertido
     }
 
     
     public void display() {
+       NodoGenerico<T> temp;
 
-       NodoGenerico<T> temp = dummy.getDerecha();
-
-        while (temp != back) {
-        if (temp != null && temp.getContenido() != null) {
-            Animal animal = (Animal) temp.getContenido();
-            System.out.println(animal.toString() + " codigo " + animal.getCodigo());
-        }
-         if(temp != null){
-                   temp = temp.getDerecha();
-        }
-    }
-
-   
-    if (invertido) {
-        temp = back.getIzquierda(); // Empezamos desde back después de invertir
-        while (temp != dummy) {
-            if (temp != null && temp.getContenido() != null) {
+       temp = dummy.getDerecha();
+        while (temp != null) {
+            if (temp.getContenido() != null) {
                 Animal animal = (Animal) temp.getContenido();
                 System.out.println(animal.toString() + " codigo " + animal.getCodigo());
             }
-                if(temp != null){
-                    temp = temp.getIzquierda();
-                }
-          
+            temp = temp.getDerecha();
         }
     }
-}
     
     public void InsertionSort(){
         if(dummy.getDerecha() == back || dummy.getDerecha().getDerecha() == back){//si esta vacia o si solo tiene un elemento

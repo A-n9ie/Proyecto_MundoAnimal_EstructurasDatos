@@ -32,9 +32,9 @@ public class Arbol {    // ÁRBOL BINARIO
         raiz.getHijoDer().getHijoIzq().setHijoDer(new Nodo(new Animal("Lagarto"))); //reptil dere
         
         raiz.getHijoDer().getHijoIzq().setHijoIzq(new Nodo(new Animal("Mamifero"))); //reptil izq
-        raiz.getHijoDer().getHijoIzq().getHijoIzq().setHijoDer(new Nodo(new Animal("acuatico"))); //mamifero dere
+        raiz.getHijoDer().getHijoIzq().getHijoIzq().setHijoDer(new Nodo("es acuatico")); //mamifero dere
         raiz.getHijoDer().getHijoIzq().getHijoIzq().getHijoDer().setHijoDer(new Nodo(new Animal("Ballena"))); //acuatico dere
-        raiz.getHijoDer().getHijoIzq().getHijoIzq().getHijoDer().setHijoIzq(new Nodo(new Animal("maulla"))); //acuatico izq
+        raiz.getHijoDer().getHijoIzq().getHijoIzq().getHijoDer().setHijoIzq(new Nodo("maulla")); //acuatico izq
         raiz.getHijoDer().getHijoIzq().getHijoIzq().getHijoDer().getHijoIzq().setHijoDer(new Nodo(new Animal("Gato"))); //maulla dere
         raiz.getHijoDer().getHijoIzq().getHijoIzq().getHijoDer().getHijoIzq().setHijoIzq(new Nodo(new Animal("Perro"))); //maulla izq
         
