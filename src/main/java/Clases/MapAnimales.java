@@ -53,8 +53,12 @@ public class MapAnimales {
     }
     
     public void features(String nombre) {
-        Contenedor<String> caracteristicas = map.get(nombre);
-
+        
+        String nombreNormal = capitalizeFirstLetter(nombre.toLowerCase());
+        
+        Contenedor<String> caracteristicas = map.get(nombreNormal);
+        
+        
         if (caracteristicas == null || caracteristicas.isEmpty()) {
             System.out.println("No existe");
         } else {
@@ -68,4 +72,10 @@ public class MapAnimales {
         }
     }
     
+    private String capitalizeFirstLetter(String str) {
+    if (str == null || str.isEmpty()) {
+        return str;
+    }
+    return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
 }

@@ -3,11 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Business;
-
-import Clases.Animal;
 import Clases.Arbol;
 import Clases.Nodo;
-import Presentacion.VistaPregunta;
+import Presentacion.Vista;
 
 /**
  *
@@ -16,51 +14,42 @@ import Presentacion.VistaPregunta;
 public class ControllerPregunta {
     private Arbol arbolito;
     private Nodo root;
-    private VistaPregunta vPregunta;
     private ControllerRegistro vRegistro;
+    private Vista vista;
 
-    public ControllerPregunta() {
-        this.arbolito = new Arbol();
-        this.root = arbolito.getRaiz().getHijoDer();
-        this.vPregunta = new VistaPregunta();
-        this.vRegistro = new ControllerRegistro();
-        //generarPregunta();
-        vPregunta.setVisible(true);
-        
-    }
-
-    public ControllerPregunta(Arbol arbolito, VistaPregunta vista) {
+    public ControllerPregunta(Vista vista, Arbol arbolito) {
+        this.vista = vista;
         this.arbolito = arbolito;
-        this.vPregunta = vista;
-        vista.setVisible(true);
+        this.root = arbolito.getRaiz().getHijoDer();
+        this.vRegistro = new ControllerRegistro();
     }
-    
+
     public void getController(){
-        vPregunta.addSi_btn(e -> realizarPregunta("Si"));
-        vPregunta.addNo_btn(e -> realizarPregunta("No"));
-        vPregunta.addReiniciar_btn(e -> reiniciar());
-        vPregunta.addSalir_btn(e -> salir());
+        generarPregunta();
     }
     
     private void generarPregunta(){
-        String pregunta = "¿El animal ";
-        if (root.getAnimal() != null)
-            pregunta += "es un/a " + root.getAnimal() + "?";
-        else 
-            pregunta += root.getCaracteristica() + "?";
-
-        vPregunta.setPregunta_txt(pregunta);
+        String pregunta = " ";
+        if (root != null && root.getAnimal() != null){
+            pregunta = vista.pedirRespuesta("El animal es un/a" + root.getAnimal() + "?");
+        }else if(root != null && root.getCaracteristica() != null){
+            pregunta = vista.pedirRespuesta("El animal " + root.getCaracteristica() + "?");
+        }
+        
+        if(pregunta != null){
+            pregunta = pregunta.toLowerCase();
+            realizarPregunta(pregunta);
+        }
     }
     
     private void realizarPregunta(String respuesta){
-        if(arbolito.hoja(root) && respuesta.equals("Si")){
-            vPregunta.notify("Animal Encontrado.");
+        if(arbolito != null && root != null && arbolito.hoja(root) && respuesta.equals("si")){
+           vista.mostrarMensaje("Animal encontrado");
         }
-        else if (arbolito.hoja(root) && respuesta.equals("No") || root.getHijoIzq() == null && respuesta.equals("No")){
-            vPregunta.notify("Animal NO Encontrado.\n Registre al nuevo animal");
+        else if ((arbolito.hoja(root) && respuesta.equals("no")) || (root.getHijoIzq() == null && respuesta.equals("no"))){
+            vista.mostrarMensaje("Animal NO Encontrado.\n Registre al nuevo animal");
             vRegistro.setRoot(root);
             vRegistro.setArbolito(arbolito);
-            vRegistro.getVista().setVisible(true);
             vRegistro.getController();
             reiniciar();
         }
@@ -76,7 +65,6 @@ public class ControllerPregunta {
     }
     
     public void salir(){
-        this.vPregunta.dispose();
         this.arbolito.guardarJson("arbol.json");
     }
     

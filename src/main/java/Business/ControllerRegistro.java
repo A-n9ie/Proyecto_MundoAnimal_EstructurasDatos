@@ -7,30 +7,30 @@ package Business;
 import Clases.Animal;
 import Clases.Arbol;
 import Clases.Nodo;
-import Presentacion.VistaRegistro;
+import Presentacion.Vista;
 
 /**
  *
  * @author angie
  */
 public class ControllerRegistro {
-    private VistaRegistro vista;
     private Nodo root;
     private Arbol arbolito;
+    private Vista vista;
 
     public ControllerRegistro() {
-        this.vista = new VistaRegistro();
+        this.vista = new Vista();
         this.root = null;
         this.arbolito = null;
     }
 
-    public ControllerRegistro(VistaRegistro vista, Nodo root, Arbol arbolito) {
+    public ControllerRegistro(Vista vista, Nodo root, Arbol arbolito) {
         this.vista = vista;
         this.root = root;
         this.arbolito = arbolito;
     }
 
-    public VistaRegistro getVista() {
+    public Vista getVista() {
         return vista;
     }
 
@@ -43,29 +43,21 @@ public class ControllerRegistro {
     }
     
     public void getController(){
-        this.vista.addCancelar_btn(e -> cancelar());
-        this.vista.addRegistrar_btn(e -> registrar());
+        registrar();
     }
     
-    private void cancelar(){
-        this.vista.dispose();
-    }
     
     private void registrar(){
-        String nombre = vista.getNombre();
-        String caracteristica = vista.getCaracteristica();
+        String nombre = vista.pedirRespuesta("Ingrese el nombre del animal");
+        String caracteristica = vista.pedirRespuesta("Ingrese la caracteristica del animal");
         
-        if(nombre.isEmpty() || caracteristica.isEmpty()){
-            vista.notify("Ingrese los datos completos");
+        if(nombre == null || nombre.isEmpty() || caracteristica == null || caracteristica.isEmpty()){
+          vista.mostrarMensaje("Ingrese los datos completos");
         }else{
             Animal animal = new Animal(nombre, caracteristica);
             arbolito.agregar(root, animal);
-            vista.notify("Animal registrado correctamente");
-            cancelar();
+            vista.mostrarMensaje("Animal registrado correctamente");
         }
-        
-        vista.setNombre("");
-        vista.setCaracteristica("");
     }
     
 }

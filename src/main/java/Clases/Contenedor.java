@@ -10,6 +10,7 @@ package Clases;
 public class Contenedor<T> {
     private NodoGenerico<T> dummy;
     private NodoGenerico<T> back;
+    private boolean invertido = false;
 
     public Contenedor() {
         this.dummy = new NodoGenerico<>();
@@ -135,25 +136,63 @@ public class Contenedor<T> {
 
         return cont;
     }
+    
+    public void reverse(){
+        
+       NodoGenerico<T> actual = dummy.getDerecha();
+       NodoGenerico<T> temporal;
+       
+       while(actual != null){
+           
+
+           temporal = actual.getDerecha();
+          
+           
+           actual.setDerecha(actual.getIzquierda());
+           actual.setIzquierda(temporal);
+           
+           //System.out.println("Invertido: " + actual.getContenido());
+           
+           actual = actual.getIzquierda();
+       }
+       
+       temporal = dummy;
+       dummy = back;
+       back = temporal;
+        System.out.println("Lista invertida");
+       invertido = !invertido; //ahora esta invertido
+    }
 
     
     public void display() {
-        
-        if (dummy.getDerecha() == back) {
-        System.out.println("La lista está vacía.");
-        return;
-        }   
-        
-        NodoGenerico<T> temp = dummy.getDerecha();
-        
+
+       NodoGenerico<T> temp = dummy.getDerecha();
+
         while (temp != back) {
-            if (temp != null && temp.getContenido() != null) {
-                Animal animal = (Animal) temp.getContenido();
-                System.out.println(temp.getContenido().toString() + " codigo " + animal.getCodigo());
-            }
-            temp = temp.getDerecha();
+        if (temp != null && temp.getContenido() != null) {
+            Animal animal = (Animal) temp.getContenido();
+            System.out.println(animal.toString() + " codigo " + animal.getCodigo());
+        }
+         if(temp != null){
+                   temp = temp.getDerecha();
         }
     }
+
+   
+    if (invertido) {
+        temp = back.getIzquierda(); // Empezamos desde back después de invertir
+        while (temp != dummy) {
+            if (temp != null && temp.getContenido() != null) {
+                Animal animal = (Animal) temp.getContenido();
+                System.out.println(animal.toString() + " codigo " + animal.getCodigo());
+            }
+                if(temp != null){
+                    temp = temp.getIzquierda();
+                }
+          
+        }
+    }
+}
     
     public void InsertionSort(){
         if(dummy.getDerecha() == back || dummy.getDerecha().getDerecha() == back){//si esta vacia o si solo tiene un elemento
@@ -179,30 +218,12 @@ public class Contenedor<T> {
             //insertar ordenado
             
             nodoActual.setDerecha(ordenado.getDerecha());
-            ordenado.getDerecha().setDerecha(nodoActual);
+            ordenado.getDerecha().setIzquierda(nodoActual);
             ordenado.setDerecha(nodoActual);
             nodoActual.setIzquierda(ordenado);
             
             nodoActual = siguiente;
         }
-    }
-    
-    public void reverse(){
-       NodoGenerico<T> actual = dummy.getDerecha();
-       NodoGenerico<T> temporal;
-       
-       while(actual != back){
-           
-           temporal = actual.getDerecha();
-           
-           actual.setDerecha(actual.getIzquierda());
-           actual.setIzquierda(temporal);
-           
-           actual = temporal;
-       }
-       
-       temporal = dummy;
-       dummy = back;
-       back = temporal;
+        System.out.println("Lista ordenada");
     }
 }

@@ -75,11 +75,14 @@ public class Arbol {    // ÁRBOL BINARIO
     }
     
     public boolean hoja(Nodo root){
-        return root.getHijoIzq() == null && root.getHijoDer() == null;
+        return root != null && root.getHijoIzq() == null && root.getHijoDer() == null;
     }
     
     public Nodo recorrer(Nodo root, String respuesta){
-        if("No".equals(respuesta))
+        if (root == null) {
+        return null;
+        }   
+        if("no".equals(respuesta))
             return root.getHijoIzq();
         else
             return root.getHijoDer();
