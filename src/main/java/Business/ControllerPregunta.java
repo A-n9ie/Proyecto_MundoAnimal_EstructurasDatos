@@ -53,6 +53,7 @@ public class ControllerPregunta {
     private void realizarPregunta(String respuesta){
         if(arbolito != null && root != null && arbolito.hoja(root) && respuesta.equals("si")){
             System.out.println("¡Animal encontrado!");
+            reiniciar();
         }
         else if ((arbolito.hoja(root) && respuesta.equals("no")) || (root.getHijoIzq() == null && respuesta.equals("no"))){
             System.out.println("Animal NO Encontrado.\n Registre al nuevo animal");

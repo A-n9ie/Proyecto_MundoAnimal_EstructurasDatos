@@ -96,6 +96,7 @@ public class Controller {
                     controllerPreg.getController();
                     break;
                 case 2:
+                    contenedor.clear();
                     System.out.println("\nTransformando el arbol a lista...\n\n");
                     contenedor.hojasDelArbol(arbol.getRaiz(), 0);
                     map.agregarMap(arbol.getRaiz().getHijoDer(), new Contenedor<>(), false);

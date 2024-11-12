@@ -38,6 +38,12 @@ public class Contenedor<T> {
         return dummy.getDerecha() == back;  
     }
     
+    public void clear() {
+        dummy.setDerecha(back); 
+        back.setIzquierda(dummy); 
+    }
+
+    
     public void hojasDelArbol(Nodo root, int nivel){
         if(root == null){
             return;
@@ -46,7 +52,7 @@ public class Contenedor<T> {
         if(root.getHijoIzq() == null && root.getHijoDer() == null){
             Animal animal = root.getAnimal();
             animal.setCodigo(nivel);
-           
+            
             agregarPrimero((T) animal);
         }
         
@@ -169,7 +175,7 @@ public class Contenedor<T> {
         while (temp != null) {
             if (temp.getContenido() != null) {
                 Animal animal = (Animal) temp.getContenido();
-                System.out.println(animal.toString() + " codigo " + animal.getCodigo());
+                System.out.println(animal.getNombre() + " codigo " + animal.getCodigo());
             }
             temp = temp.getDerecha();
         }
